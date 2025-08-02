@@ -191,7 +191,7 @@ WITH high_issue_book AS(
 	JOIN employees e ON e.branch_id = b.branch_id
 	JOIN issued_status i ON i.issued_emp_id = e.emp_id
 	GROUP BY 1
-```
 )
 SELECT * FROM high_issue_book
 ORDER BY high_no_book DESC
+```
