@@ -195,3 +195,29 @@ WITH high_issue_book AS(
 SELECT * FROM high_issue_book
 ORDER BY high_no_book DESC
 ```
+
+/* Task 16: Identify Members with Overdue Books
+Write a query to identify members who have overdue books (assume a 30-day return period). 
+Display the member's_id, member's name, book title, issue date, and days overdue.
+*/
+```sql
+SELECT 
+	i.issued_member_id,
+	m.member_name,
+	b.book_title,
+	i.issued_date,
+	rs.return_date,
+	(CURRENT_DATE - i.issued_date) AS Overdue
+FROM issued_status i
+JOIN members m
+ON m.member_id = i.issued_member_id
+JOIN books b 
+ON b.isbn = i.issued_book_isbn
+LEFT JOIN return_status rs
+ON rs.issued_id = i.issued_id
+WHERE 
+	rs.return_date IS NULL
+	AND
+	(CURRENT_DATE - i.issued_date) > 30
+ORDER BY 1
+```
